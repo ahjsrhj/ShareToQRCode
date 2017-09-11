@@ -4,6 +4,13 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+Properties properties = new Properties()
+boolean isHasFile = false
+if (project.rootProject.findProject('local.properties') != null){
+    isHasFile = true
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -14,6 +21,21 @@ android {
         versionCode 2
         versionName "1.0.1"
     }
+    signingConfigs {
+        debugConfig {
+            keyAlias isHasFile ? properties.getProperty("ALIAS_NAME") : System.getenv("ALIAS_NAME")
+            keyPassword isHasFile ? properties.getProperty("ALIAS_PASS") : System.getenv("ALIAS_PASS")
+            storePassword isHasFile ? properties.getProperty("KEYSTORE_PASS") : System.getenv("KEYSTORE_PASS")
+            storeFile file("../.hexer.keystore")
+        }
+        releaseConfig {
+            keyAlias isHasFile ? properties.getProperty("ALIAS_NAME") : System.getenv("ALIAS_NAME")
+            keyPassword isHasFile ? properties.getProperty("ALIAS_PASS") : System.getenv("ALIAS_PASS")
+            storePassword isHasFile ? properties.getProperty("KEYSTORE_PASS") : System.getenv("KEYSTORE_PASS")
+            storeFile file("../.hexer.keystore")
+
+        }
+    }
     buildTypes {
         release {
             minifyEnabled true
@@ -21,10 +43,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            storeFile file("../.hexer.keystore")
-            storePassword System.getenv("KEYSTORE_PASS")
-            keyAlias System.getenv("ALIAS_NAME")
-            keyPassword System.getenv("ALIAS_PASS")
+            signingConfig signingConfigs.releaseConfig
         }
     }
 }
