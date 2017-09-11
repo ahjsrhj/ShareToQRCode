@@ -3,6 +3,7 @@ package cn.imrhj.sharetoqrcode
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -24,8 +25,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initStatusBar() {
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor =  Color.TRANSPARENT
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor =  Color.TRANSPARENT
+        } else {
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        }
+
         var systemUiVisibility = window.decorView.systemUiVisibility
         systemUiVisibility = systemUiVisibility
                 .or(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
