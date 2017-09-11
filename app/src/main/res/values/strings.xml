@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">分享项生成二维码</string>
+    <string name="share_name">生成二维码</string>
+    <string name="save">保存</string>
+    <string name="share">分享</string>
+    <string name="exit">退出</string>
+</resources>
