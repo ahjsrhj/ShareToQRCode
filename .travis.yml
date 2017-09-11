@@ -9,8 +9,7 @@ android:
 git:
   submodules: false
 before_install:
-- openssl aes-256-cbc -K $encrypted_4faf715535f4_key -iv $encrypted_4faf715535f4_iv
-  -in .hexer.keystore.enc -out .hexer.keystore -d
+- openssl aes-256-cbc -K $encrypted_4faf715535f4_key -iv $encrypted_4faf715535f4_iv -in .hexer.keystore.enc -out .hexer.keystore -d
 - chmod +x gradlew
 script:
 - "./gradlew assembleRelease"
