@@ -4,11 +4,12 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-Properties properties = new Properties()
+def Properties props = new Properties()
 boolean isHasFile = false
-if (project.rootProject.findProject('local.properties') != null){
+File propFile = file('../signing.properties')
+if (propFile.exists()) {
     isHasFile = true
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    props.load(new FileInputStream(propFile))
 }
 
 android {
@@ -21,29 +22,34 @@ android {
         versionCode 3
         versionName "1.0.1-hotfix"
     }
-    signingConfigs {
-        debugConfig {
-            keyAlias isHasFile ? properties.getProperty("ALIAS_NAME") : System.getenv("ALIAS_NAME")
-            keyPassword isHasFile ? properties.getProperty("ALIAS_PASS") : System.getenv("ALIAS_PASS")
-            storePassword isHasFile ? properties.getProperty("KEYSTORE_PASS") : System.getenv("KEYSTORE_PASS")
-            storeFile file("../.hexer.keystore")
-        }
-        releaseConfig {
-            keyAlias isHasFile ? properties.getProperty("ALIAS_NAME") : System.getenv("ALIAS_NAME")
-            keyPassword isHasFile ? properties.getProperty("ALIAS_PASS") : System.getenv("ALIAS_PASS")
-            storePassword isHasFile ? properties.getProperty("KEYSTORE_PASS") : System.getenv("KEYSTORE_PASS")
-            storeFile file("../.hexer.keystore")
 
+    signingConfigs {
+        defaultConfig {
+            keyAlias isHasFile ? props['ALIAS_NAME'] : System.getenv("ALIAS_NAME")
+            keyPassword isHasFile ? props['ALIAS_PASS'] : System.getenv("ALIAS_PASS")
+            storePassword isHasFile ? props['KEYSTORE_PASS'] : System.getenv("KEYSTORE_PASS")
+            storeFile isHasFile ?  file(props['KEYSTORE_URL']) :  file("../.hexer.keystore")
         }
     }
+
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.defaultConfig
+        }
+
         release {
             minifyEnabled true
             zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            signingConfig signingConfigs.releaseConfig
+            signingConfig signingConfigs.defaultConfig
         }
     }
 }
