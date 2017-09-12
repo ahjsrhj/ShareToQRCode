@@ -12,7 +12,7 @@ import android.view.WindowManager
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.WriterException
 import com.google.zxing.BarcodeFormat
-
+import java.nio.charset.Charset
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,10 +67,11 @@ class MainActivity : AppCompatActivity() {
         val qrCodeWriter = QRCodeWriter()
         var size : Int = (resources.displayMetrics.widthPixels * 0.7).toInt()
         try {
-            val encode = qrCodeWriter.encode(string, BarcodeFormat.QR_CODE, size, size)
+            val encodeContent = String(string.toByteArray(Charsets.UTF_8), Charsets.ISO_8859_1)
+            val encode = qrCodeWriter.encode(encodeContent, BarcodeFormat.QR_CODE, size, size)
             val pixels = IntArray(size * size)
-            for (i in 0..size - 1) {
-                for (j in 0..size- 1) {
+            for (i in 0 until size) {
+                for (j in 0 until size) {
                     if (encode.get(j, i)) {
                         pixels[i * size+ j] = 0x00000000
                     } else {
