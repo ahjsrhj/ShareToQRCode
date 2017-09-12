@@ -90,7 +90,10 @@ class MainActivity : AppCompatActivity() {
     private fun showDialog(bitmap: Bitmap?) {
         if (bitmap != null) {
             val dialog = ImageDialog(this, bitmap)
-            dialog.setOnDismissListener { finish() }
+            dialog.setOnDismissListener {
+                finish()
+                System.exit(0)
+            }
             dialog.show()
         }
     }

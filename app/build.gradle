@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-def Properties props = new Properties()
+Properties props = new Properties()
 boolean isHasFile = false
 File propFile = file('../signing.properties')
 if (propFile.exists()) {
