@@ -19,8 +19,8 @@ android {
         applicationId "cn.imrhj.sharetoqrcode"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 3
-        versionName "1.0.1-hotfix"
+        versionCode 4
+        versionName "1.1.0"
     }
 
     signingConfigs {
