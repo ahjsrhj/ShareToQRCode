@@ -19,7 +19,7 @@ android {
         applicationId "cn.imrhj.sharetoqrcode"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 4
+        versionCode 5
         versionName "1.1.0"
     }
 
