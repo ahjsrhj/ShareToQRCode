@@ -66,7 +66,7 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
             }
         })
         imageView.setOnTouchListener { _, motionEvent -> gestureDetector.onTouchEvent(motionEvent) }
-        imageView.setOnLongClickListener { true }
+        imageView.setOnLongClickListener { true }   // 为了震动
     }
 
     private fun showMenu(view: View, x: Int, y: Int) {
