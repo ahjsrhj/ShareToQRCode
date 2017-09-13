@@ -21,28 +21,47 @@ import java.io.File
 class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context) {
     private var mBitmap: Bitmap = bitmap
 
+    private fun saveToFile() :File? {
+        val file = File(getCacheDir(context), "QRCode.jpg")
+        val result = save(mBitmap, file)
+        return if (result) {
+            file
+        } else {
+            null
+        }
+    }
+
     private fun shareBitmap() {
         dismiss()
-        val file = File(getCacheDir(context), "QRCode.jpg")
-        var result = save(mBitmap, file)
-        if (result) {
-            shareFile(file)
+        val file = saveToFile()
+        if (file != null) {
+            context.startActivity(Intent.createChooser(buildIntent(file), "分享二维码"))
         } else {
             //todo
         }
     }
 
-    private fun shareFile(file: File) {
+    private fun buildIntent(file: File, action: String = Intent.ACTION_SEND): Intent {
         val intent = Intent()
-        intent.action = Intent.ACTION_SEND
+        intent.action = action
         intent.type = "image/jpg"
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val builder = StrictMode.VmPolicy.Builder()
             StrictMode.setVmPolicy(builder.build())
         }
-
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
-        context.startActivity(Intent.createChooser(intent, "分享二维码"))
+        return  intent
+    }
+
+    private fun openBitmap() {
+        dismiss()
+        val file = saveToFile()
+        if (file != null) {
+            val intent = buildIntent(file, Intent.ACTION_VIEW)
+            intent.setDataAndType(Uri.fromFile(file), "image/jpg")
+            context.startActivity(intent)
+        }
     }
 
     private fun saveBitmap() {
@@ -78,5 +97,7 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
 //        contentView.findViewById<View>(R.id.tv_save).setOnClickListener { saveBitmap() }
         contentView.findViewById<View>(R.id.tv_share).setOnClickListener { shareBitmap() }
         contentView.findViewById<View>(R.id.tv_exit).setOnClickListener { dismiss() }
+        contentView.findViewById<View>(R.id.tv_open).setOnClickListener { openBitmap() }
     }
+
 }

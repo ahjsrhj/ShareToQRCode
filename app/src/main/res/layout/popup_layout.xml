@@ -28,6 +28,20 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/tv_open"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="18dp"
+            android:paddingEnd="38dp"
+            android:paddingStart="18dp"
+            android:text="@string/open"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="18sp" />
+
+        <TextView
             android:id="@+id/tv_share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
