@@ -10,6 +10,7 @@ import android.os.StrictMode
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupWindow
+import android.widget.Toast
 import cn.imrhj.sharetoqrcode.util.getCacheDir
 import cn.imrhj.sharetoqrcode.util.save
 import java.io.File
@@ -20,6 +21,7 @@ import java.io.File
  */
 class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context) {
     private var mBitmap: Bitmap = bitmap
+    private var mPopupWindow: PopupWindow? = null
 
     private fun saveToFile() :File? {
         val file = File(getCacheDir(context), "QRCode.jpg")
@@ -32,12 +34,12 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
     }
 
     private fun shareBitmap() {
-        dismiss()
+        mPopupWindow?.dismiss()
         val file = saveToFile()
         if (file != null) {
             context.startActivity(Intent.createChooser(buildIntent(file), "分享二维码"))
         } else {
-            //todo
+            Toast.makeText(context, "生成临时文件失败", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -55,12 +57,14 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
     }
 
     private fun openBitmap() {
-        dismiss()
+        mPopupWindow?.dismiss()
         val file = saveToFile()
         if (file != null) {
             val intent = buildIntent(file, Intent.ACTION_VIEW)
             intent.setDataAndType(Uri.fromFile(file), "image/jpg")
             context.startActivity(intent)
+        } else {
+            Toast.makeText(context, "生成临时文件失败", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -86,9 +90,9 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
 
     private fun showMenu(view: View, x: Int, y: Int) {
         val contentView = View.inflate(context, R.layout.popup_layout, null)
-        val popupWindow = PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT,
+        mPopupWindow = PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, x, y)
+        mPopupWindow?.showAtLocation(view, Gravity.NO_GRAVITY, x, y)
 
         contentView.findViewById<View>(R.id.tv_share).setOnClickListener { shareBitmap() }
         contentView.findViewById<View>(R.id.tv_exit).setOnClickListener { dismiss() }
