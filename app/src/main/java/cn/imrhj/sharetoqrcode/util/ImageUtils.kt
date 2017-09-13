@@ -17,7 +17,6 @@ fun save(src: Bitmap, file: File): Boolean {
 
     var ret = false
         FileOutputStream(file).use {
-            Log.d("${Thread.currentThread().name} class = save", "rhjlog save: save")
             ret = src.compress(Bitmap.CompressFormat.JPEG, 100, it)
             it.flush()
             it.close()
@@ -25,6 +24,4 @@ fun save(src: Bitmap, file: File): Boolean {
     return ret
 }
 
-private fun isEmptyBitmap(src: Bitmap?): Boolean {
-    return src == null || src.width == 0 || src.height == 0
-}
+fun isEmptyBitmap(src: Bitmap?): Boolean = src == null || src.width == 0 || src.height == 0
