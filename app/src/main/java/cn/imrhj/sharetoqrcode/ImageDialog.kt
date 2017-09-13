@@ -64,10 +64,6 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
         }
     }
 
-    private fun saveBitmap() {
-
-    }
-
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setCancelable(true)
@@ -94,7 +90,6 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
                 ViewGroup.LayoutParams.WRAP_CONTENT, true)
         popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, x, y)
 
-//        contentView.findViewById<View>(R.id.tv_save).setOnClickListener { saveBitmap() }
         contentView.findViewById<View>(R.id.tv_share).setOnClickListener { shareBitmap() }
         contentView.findViewById<View>(R.id.tv_exit).setOnClickListener { dismiss() }
         contentView.findViewById<View>(R.id.tv_open).setOnClickListener { openBitmap() }
