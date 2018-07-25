@@ -1,8 +1,34 @@
 <resources>
     <string name="app_name">分享项生成二维码</string>
+    <string name="tile_label">扫描屏幕</string>
     <string name="share_name">生成二维码</string>
     <string name="save">保存</string>
     <string name="share">分享</string>
     <string name="exit">退出</string>
+    <string name="setting">设置</string>
     <string name="open">打开</string>
+
+    <string name="title_activity_settings">设置</string>
+    <string name="pref_title_custom_qr">二维码</string>
+    <string name="pref_title_enable_custom">自定义二维码</string>
+    <string name="pref_title_custom_img">选择图片</string>
+    <string name="pref_title_enable_logo">自定义Logo</string>
+
+    <string name="pref_summary_custom_img">选择一张在二维码中间显示的图片</string>
+
+    <string name="pref_title_scan_qr">扫描二维码</string>
+    <string name="pref_title_save_clip_board">自动复制扫码结果到剪贴板</string>
+
+
+    <string name="pref_key_custom_qr">pref_key_custom_qr</string>
+    <string name="pref_key_enable_custom">pref_key_enable_custom</string>
+    <string name="pref_key_custom_img">pref_key_custom_img</string>
+    <string name="pref_key_enable_logo">pref_key_enable_logo</string>
+
+    <string name="pref_key_scan_qr">pref_key_scan_qr</string>
+    <string name="pref_key_save_clip_board">pref_key_save_clip_board</string>
+
+    <string name="pref_name">pref_qrcode_file</string>
+    <string name="cancel">取消</string>
+    <string name="crop">裁剪</string>
 </resources>

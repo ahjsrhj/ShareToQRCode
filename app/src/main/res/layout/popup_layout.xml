@@ -41,6 +41,20 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/tv_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="18dp"
+            android:paddingEnd="38dp"
+            android:paddingStart="18dp"
+            android:text="@string/setting"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="18sp" />
+
+        <TextView
             android:id="@+id/tv_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

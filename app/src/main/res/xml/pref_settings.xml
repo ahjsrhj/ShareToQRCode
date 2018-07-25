@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="@string/pref_key_scan_qr"
+        android:title="@string/pref_title_scan_qr">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_save_clip_board"
+            android:title="@string/pref_title_save_clip_board" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/pref_key_custom_qr"
+        android:title="@string/pref_title_custom_qr">
+
+        <!--<SwitchPreference-->
+        <!--android:defaultValue="false"-->
+        <!--android:key="@string/pref_key_enable_custom"-->
+        <!--android:title="@string/pref_title_enable_custom" />-->
+
+        <!--android:dependency="@string/pref_key_enable_custom"-->
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_enable_logo"
+            android:title="@string/pref_title_enable_logo" />
+
+        <Preference
+            android:dependency="@string/pref_key_enable_logo"
+            android:key="@string/pref_key_custom_img"
+            android:summary="@string/pref_summary_custom_img"
+            android:title="@string/pref_title_custom_img" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
