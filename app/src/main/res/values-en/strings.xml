@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ShareToQRCode</string>
+    <string name="tile_label">Scan screen</string>
     <string name="share_name">generateQRCode</string>
     <string name="save">save</string>
+    <string name="copy">copy</string>
     <string name="share">share</string>
     <string name="exit">exit</string>
+    <string name="setting">setting</string>
+    <string name="open">open</string>
+
+    <string name="title_activity_settings">SETTING</string>
+    <string name="pref_title_custom_qr">QRCode</string>
+    <string name="pref_title_enable_custom">Custom QRCode</string>
+    <string name="pref_title_custom_img">Select Image</string>
+    <string name="pref_title_enable_logo">Custom Logo</string>
+
+    <string name="pref_summary_custom_img">Select a image show in center of QRCode</string>
+
+    <string name="pref_title_scan_qr">Scan QRCode</string>
+    <string name="pref_title_save_clip_board">Auto copy result to clipboard</string>
+
+
+    <string name="pref_key_custom_qr">pref_key_custom_qr</string>
+    <string name="pref_key_enable_custom">pref_key_enable_custom</string>
+    <string name="pref_key_custom_img">pref_key_custom_img</string>
+    <string name="pref_key_enable_logo">pref_key_enable_logo</string>
+
+    <string name="pref_key_scan_qr">pref_key_scan_qr</string>
+    <string name="pref_key_save_clip_board">pref_key_save_clip_board</string>
+
+    <string name="pref_key_try_root">pref_key_try_root</string>
+    <string name="pref_title_try_root">Use root permission scan QRCode</string>
+    <string name="pref_summary_try_root">It may fail on some devices that support Project Treble (such as Xiaomi 8).</string>
+    <string name="pref_key_hide_icon">pref_key_hide_icon</string>
+    <string name="pref_title_hide_icon">Hide app icon</string>
+    <string name="pref_summary_hide_icon">The app can also be opened by long pressing the scan screen button on the tile</string>
+
+    <string name="pref_name">pref_qrcode_file</string>
+    <string name="cancel">Cancel</string>
+    <string name="crop">Crop</string>
+    <string name="title_try">Experimental function</string>
+
 </resources>

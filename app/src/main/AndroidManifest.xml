@@ -2,21 +2,75 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.imrhj.sharetoqrcode">
 
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+
     <application
+        android:name=".App"
         android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:icon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:label="@string/share_name"
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher"
-            android:exported="true" >
+            android:label="@string/share_name">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Setting">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="setting"
+                    android:scheme="cn.imrhj.shareqrcode" />
+
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".service.ScreenQRCodeTile"
+            android:icon="@drawable/icon_scan"
+            android:label="@string/tile_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".ui.activity.MediaProjectionActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.ScreenActivity" />
+
+        <service android:name=".service.CaptureScreenService" />
+
+        <activity android:name=".ui.activity.CropImageActivity" />
+        <activity
+            android:name=".ui.activity.EmptyActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ui.activity.LoadingActivity"
+            android:theme="@style/AppTheme.Loading">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
     </application>
 
