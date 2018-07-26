@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.StrictMode
 import android.support.v7.widget.CardView
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -46,13 +45,14 @@ class ImageDialog(context: Context, bitmap: Bitmap, content: String) : Dialog(co
         val imageView = findViewById<ImageView>(R.id.image)
         val text = findViewById<TextView>(R.id.text)
         val card = findViewById<CardView>(R.id.card)
+        val scrollView = findViewById<View>(R.id.scrollView)
         text.text = content
         imageView.setImageBitmap(bitmap)
         imageView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 imageView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                text.visibility = View.VISIBLE
-                text.translationX = imageView.width.toFloat()
+                scrollView.visibility = View.VISIBLE
+                scrollView.translationX = imageView.width.toFloat()
             }
         })
         val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
@@ -63,18 +63,20 @@ class ImageDialog(context: Context, bitmap: Bitmap, content: String) : Dialog(co
             }
 
             override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-                Log.d(Thread.currentThread().name, "class = ImageDialog rhjlog onSingleTapConfirmed: ")
                 val size = card.width.toFloat()
                 val animator1 = ObjectAnimator.ofFloat(imageView, "translationX", if (mShawCode) 0F else -size, if (mShawCode) -size else 0F)
-                val animator2 = ObjectAnimator.ofFloat(text, "translationX", if (mShawCode) size else 0F, if (mShawCode) 0F else size)
+                val animator2 = ObjectAnimator.ofFloat(scrollView, "translationX", if (mShawCode) size else 0F, if (mShawCode) 0F else size)
                 animator1.setDuration(300).start()
                 animator2.setDuration(300).start()
                 mShawCode = !mShawCode
                 return super.onSingleTapConfirmed(e)
             }
         })
+
         card.setOnTouchListener { _, motionEvent -> gestureDetector.onTouchEvent(motionEvent) }
         card.setOnLongClickListener { true }   // 为了震动
+        text.setOnTouchListener { _, motionEvent -> gestureDetector.onTouchEvent(motionEvent) }
+        text.setOnLongClickListener { true }
     }
 
     private fun showMenu(view: View, x: Int, y: Int) {
@@ -93,7 +95,7 @@ class ImageDialog(context: Context, bitmap: Bitmap, content: String) : Dialog(co
     private fun copy(popupWindow: PopupWindow) {
         popupWindow.dismiss()
         mClipboardManager.primaryClip = ClipData.newPlainText(mContent, mContent)
-        Toast.makeText(context, "复制成功", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "文本复制成功", Toast.LENGTH_LONG).show()
     }
 
     fun setOnSettingClickListener(listener: () -> Unit) {

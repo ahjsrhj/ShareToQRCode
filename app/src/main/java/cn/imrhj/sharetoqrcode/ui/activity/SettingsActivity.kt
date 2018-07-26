@@ -1,7 +1,9 @@
 package cn.imrhj.sharetoqrcode.ui.activity
 
 import android.app.Activity
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
@@ -123,6 +125,26 @@ class SettingsActivity : AppCompatActivity() {
                         Toast.makeText(activity, "瞎点啥啊，手机root了么?", Toast.LENGTH_LONG).show()
                         return@setOnPreferenceChangeListener false
                     }
+                }
+                true
+            }
+
+            findPreference(getString(R.string.pref_key_hide_icon)).setOnPreferenceChangeListener { _, newValue ->
+                //                activity.packageManager
+
+                val componentName = ComponentName(activity.applicationContext, LoadingActivity::class.java)
+                if (newValue == true) {
+                    // hide
+                    activity.packageManager.setComponentEnabledSetting(
+                            componentName,
+                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                            PackageManager.DONT_KILL_APP)
+                } else {
+                    // show
+                    activity.packageManager.setComponentEnabledSetting(
+                            componentName,
+                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP)
                 }
                 true
             }

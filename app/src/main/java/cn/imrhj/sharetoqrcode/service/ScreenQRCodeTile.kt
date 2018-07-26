@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
-import android.os.IBinder
 import android.os.SystemClock
 import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
@@ -25,13 +24,12 @@ import java.io.File
 @TargetApi(Build.VERSION_CODES.N)
 class ScreenQRCodeTile : TileService() {
     private val mSharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(applicationContext) }
-    private val mUseRoot by lazy { mSharedPreferences.getBoolean(getString(R.string.pref_key_try_root), false) }
+    private var mUseRoot = false
     private val mClipboardManager by lazy { getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
     override fun onClick() {
         super.onClick()
-        Log.d(Thread.currentThread().name, "class = ScreenQRCodeTile rhjlog onClick: " + qsTile?.state)
-
+        mUseRoot = mSharedPreferences.getBoolean(getString(R.string.pref_key_try_root), false)
         if (mUseRoot) {
             scanQRCodeForRoot()
         } else {
@@ -39,26 +37,11 @@ class ScreenQRCodeTile : TileService() {
         }
     }
 
-    override fun onTileAdded() {
-        super.onTileAdded()
-        Log.d(Thread.currentThread().name, "class = ScreenQRCodeTile rhjlog onTileAdded: ${qsTile?.state}")
-    }
-
     override fun onStartListening() {
         super.onStartListening()
         Log.d(Thread.currentThread().name, "class = ScreenQRCodeTile rhjlog onStartListening: " + qsTile?.state)
         qsTile.state = Tile.STATE_INACTIVE
         qsTile.updateTile()
-    }
-
-    override fun onBind(intent: Intent?): IBinder {
-        Log.d(Thread.currentThread().name, "class = ScreenQRCodeTile rhjlog onBind: $applicationContext")
-        return super.onBind(intent)
-    }
-
-    override fun onStopListening() {
-        super.onStopListening()
-        Log.d(Thread.currentThread().name, "class = ScreenQRCodeTile rhjlog onStopListening: " + qsTile?.state)
     }
 
     private fun scanQRCodeForRoot() {
@@ -74,6 +57,7 @@ class ScreenQRCodeTile : TileService() {
                 Toast.makeText(baseContext, "啊！居然没找到二维码", Toast.LENGTH_LONG).show()
             }
         } else {
+            Toast.makeText(baseContext, "root模式运行失败,转为普通模式", Toast.LENGTH_SHORT).show()
             startActivityAndCollapse(Intent(this, MediaProjectionActivity::class.java))
         }
     }

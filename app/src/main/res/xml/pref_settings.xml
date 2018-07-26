@@ -38,9 +38,16 @@
 
     <PreferenceScreen android:title="@string/title_try">
         <SwitchPreference
+            android:defaultValue="false"
             android:key="@string/pref_key_try_root"
+            android:summary="@string/pref_summary_try_root"
             android:title="@string/pref_title_try_root" />
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_hide_icon"
+            android:summary="@string/pref_summary_hide_icon"
+            android:title="@string/pref_title_hide_icon" />
 
     </PreferenceScreen>
 

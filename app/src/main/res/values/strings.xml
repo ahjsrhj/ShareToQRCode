@@ -31,6 +31,10 @@
 
     <string name="pref_key_try_root">pref_key_try_root</string>
     <string name="pref_title_try_root">使用root权限扫描屏幕</string>
+    <string name="pref_summary_try_root">在某些支持Project Treble(比如说小米8)的设备上可能会运行失败</string>
+    <string name="pref_key_hide_icon">pref_key_hide_icon</string>
+    <string name="pref_title_hide_icon">隐藏应用图标</string>
+    <string name="pref_summary_hide_icon">通过长按磁贴上的扫描屏幕按钮也可打开应用</string>
 
     <string name="pref_name">pref_qrcode_file</string>
     <string name="cancel">取消</string>

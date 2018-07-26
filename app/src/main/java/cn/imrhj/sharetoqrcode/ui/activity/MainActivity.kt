@@ -50,7 +50,11 @@ class MainActivity : AppCompatActivity() {
                 System.exit(0)
             }
             dialog.setOnSettingClickListener {
-                startActivity(Intent(this, SettingsActivity::class.java))
+                //                startActivity(Intent(this, SettingsActivity::class.java))
+                val intent = Intent()
+                intent.data = Uri.parse("cn.imrhj.shareqrcode://setting")
+                intent.action = Intent.ACTION_VIEW
+                startActivity(intent)
             }
             dialog.show()
         }
