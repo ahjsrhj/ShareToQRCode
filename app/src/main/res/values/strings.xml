@@ -1,7 +1,43 @@
 <resources>
     <string name="app_name">分享项生成二维码</string>
+    <string name="tile_label">扫描屏幕</string>
     <string name="share_name">生成二维码</string>
     <string name="save">保存</string>
     <string name="share">分享</string>
+    <string name="copy">复制</string>
     <string name="exit">退出</string>
+    <string name="setting">设置</string>
+    <string name="open">打开</string>
+
+    <string name="title_activity_settings">设置</string>
+    <string name="pref_title_custom_qr">二维码</string>
+    <string name="pref_title_enable_custom">自定义二维码</string>
+    <string name="pref_title_custom_img">选择图片</string>
+    <string name="pref_title_enable_logo">自定义Logo</string>
+
+    <string name="pref_summary_custom_img">选择一张在二维码中间显示的图片</string>
+
+    <string name="pref_title_scan_qr">扫描二维码</string>
+    <string name="pref_title_save_clip_board">自动复制扫码结果到剪贴板</string>
+
+
+    <string name="pref_key_custom_qr">pref_key_custom_qr</string>
+    <string name="pref_key_enable_custom">pref_key_enable_custom</string>
+    <string name="pref_key_custom_img">pref_key_custom_img</string>
+    <string name="pref_key_enable_logo">pref_key_enable_logo</string>
+
+    <string name="pref_key_scan_qr">pref_key_scan_qr</string>
+    <string name="pref_key_save_clip_board">pref_key_save_clip_board</string>
+
+    <string name="pref_key_try_root">pref_key_try_root</string>
+    <string name="pref_title_try_root">使用root权限扫描屏幕</string>
+    <string name="pref_summary_try_root">在某些支持Project Treble(比如说小米8)的设备上可能会运行失败</string>
+    <string name="pref_key_hide_icon">pref_key_hide_icon</string>
+    <string name="pref_title_hide_icon">隐藏应用图标</string>
+    <string name="pref_summary_hide_icon">通过长按磁贴上的扫描屏幕按钮也可打开应用</string>
+
+    <string name="pref_name">pref_qrcode_file</string>
+    <string name="cancel">取消</string>
+    <string name="crop">裁剪</string>
+    <string name="title_try">实验室</string>
 </resources>

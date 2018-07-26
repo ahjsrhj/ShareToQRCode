@@ -5,4 +5,6 @@
     <string name="save">save</string>
     <string name="share">share</string>
     <string name="exit">exit</string>
+    <string name="setting">setting</string>
+    <string name="open">open</string>
 </resources>
