@@ -2,6 +2,8 @@ package cn.imrhj.sharetoqrcode.util
 
 import android.graphics.Bitmap
 import android.media.Image
+import android.net.Uri
+import android.provider.MediaStore
 import cn.imrhj.sharetoqrcode.App
 import java.io.File
 import java.io.FileOutputStream
@@ -23,6 +25,13 @@ fun save(src: Bitmap, file: File): Boolean {
         it.close()
     }
     return ret
+}
+
+fun file2bitmap(src: File): Bitmap? {
+    if (src.exists()) {
+        return MediaStore.Images.Media.getBitmap(App.instance().contentResolver, Uri.fromFile(src))
+    }
+    return null
 }
 
 fun isEmptyBitmap(src: Bitmap?): Boolean = src == null || src.width == 0 || src.height == 0

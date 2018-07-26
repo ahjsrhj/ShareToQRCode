@@ -31,6 +31,7 @@ class MediaProjectionActivity : AppCompatActivity() {
             intent.putExtra("resultCode", resultCode)
             startService(intent)
             finish()
+            overridePendingTransition(0, 0)
         }
     }
 }

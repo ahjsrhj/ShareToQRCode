@@ -45,11 +45,17 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.activity.MediaProjectionActivity" />
+        <activity
+            android:name=".ui.activity.MediaProjectionActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.ScreenActivity" />
 
         <service android:name=".service.CaptureScreenService" />
 
-        <activity android:name=".ui.activity.CropImageActivity"></activity>
+        <activity android:name=".ui.activity.CropImageActivity" />
+        <activity
+            android:name=".ui.activity.EmptyActivity"
+            android:launchMode="singleInstance" />
     </application>
 
 </manifest>

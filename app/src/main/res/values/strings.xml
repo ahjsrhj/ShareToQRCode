@@ -28,7 +28,11 @@
     <string name="pref_key_scan_qr">pref_key_scan_qr</string>
     <string name="pref_key_save_clip_board">pref_key_save_clip_board</string>
 
+    <string name="pref_key_try_root">pref_key_try_root</string>
+    <string name="pref_title_try_root">使用root权限扫描屏幕</string>
+
     <string name="pref_name">pref_qrcode_file</string>
     <string name="cancel">取消</string>
     <string name="crop">裁剪</string>
+    <string name="title_try">实验室</string>
 </resources>

@@ -33,6 +33,15 @@
             android:summary="@string/pref_summary_custom_img"
             android:title="@string/pref_title_custom_img" />
 
+
     </PreferenceCategory>
+
+    <PreferenceScreen android:title="@string/title_try">
+        <SwitchPreference
+            android:key="@string/pref_key_try_root"
+            android:title="@string/pref_title_try_root" />
+
+
+    </PreferenceScreen>
 
 </PreferenceScreen>

@@ -3,20 +3,14 @@ package cn.imrhj.sharetoqrcode.util
 import android.app.Activity
 import android.content.res.Resources
 import android.graphics.Color
-import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 
 fun transparentStatusBar(activity: Activity) {
     val window = activity.window
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = Color.TRANSPARENT
-    } else {
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-    }
-
+    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+    window.statusBarColor = Color.TRANSPARENT
     var systemUiVisibility = window.decorView.systemUiVisibility
     systemUiVisibility = systemUiVisibility
             .or(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
@@ -29,7 +23,6 @@ fun transparentStatusBar(activity: Activity) {
     var lp = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight)
     decorView.addView(translucentView, lp)
     translucentView.setBackgroundColor(Color.argb(0, 0, 0, 0))
-
 }
 
 private fun getStatusBarHeight(resources: Resources): Int {

@@ -11,8 +11,10 @@ import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder
 import cn.imrhj.sharetoqrcode.R
+import cn.imrhj.sharetoqrcode.util.Commander
 import cn.imrhj.sharetoqrcode.util.qrCodeSize
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.io.File
@@ -105,6 +107,21 @@ class SettingsActivity : AppCompatActivity() {
                         (activity as SettingsActivity).showLogo()
                     } else {
                         (activity as SettingsActivity).hideLogo()
+                    }
+                }
+                true
+            }
+
+            findPreference(getString(R.string.pref_key_try_root)).setOnPreferenceChangeListener { _, newValue ->
+                if (newValue == true) {
+                    val root = Commander.haveRoot()
+                    Log.d(Thread.currentThread().name, "class = SettingFragment rhjlog register: $root")
+                    if (root) {
+                        return@setOnPreferenceChangeListener true
+                    } else {
+                        Log.d(Thread.currentThread().name, "class = SettingFragment rhjlog register: showbar")
+                        Toast.makeText(activity, "瞎点啥啊，手机root了么?", Toast.LENGTH_LONG).show()
+                        return@setOnPreferenceChangeListener false
                     }
                 }
                 true

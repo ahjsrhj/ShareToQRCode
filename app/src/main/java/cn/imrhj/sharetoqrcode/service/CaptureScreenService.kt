@@ -93,6 +93,7 @@ class CaptureScreenService : Service() {
             } finally {
                 imageReader.close()
                 mediaProjection?.release()
+                mMediaProjection?.stop()
             }
 
         }, null)

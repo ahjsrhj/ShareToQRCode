@@ -9,6 +9,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppTheme.Setting">
@@ -16,7 +17,15 @@
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
+    </style>
 
+    <style name="AppTheme.ScreenActivity">
+        <item name="android:windowAnimationStyle">@style/animation_translucent_null</item>
+    </style>
+
+    <style name="animation_translucent_null" parent="@android:style/Animation.Translucent">
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
     </style>
 
 </resources>
