@@ -12,6 +12,9 @@ if (propFile.exists()) {
     props.load(new FileInputStream(propFile))
 }
 
+def gitCommitCount = 100 +
+        Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
+
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
@@ -19,8 +22,8 @@ android {
         applicationId "cn.imrhj.sharetoqrcode"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 5
-        versionName "1.1.0"
+        versionCode gitCommitCount
+        versionName "1.2.1"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -48,7 +51,7 @@ android {
             minifyEnabled true
             zipAlignEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             signingConfig signingConfigs.defaultConfig
         }
