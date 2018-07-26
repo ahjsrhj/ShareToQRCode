@@ -1,15 +1,21 @@
 package cn.imrhj.sharetoqrcode.ui.view
 
+import android.animation.ObjectAnimator
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.StrictMode
+import android.support.v7.widget.CardView
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupWindow
+import android.widget.TextView
 import android.widget.Toast
 import cn.imrhj.sharetoqrcode.R
 import cn.imrhj.sharetoqrcode.util.getCacheDir
@@ -20,28 +26,55 @@ import java.io.File
 /**
  * Created by rhj on 2017/9/6.
  */
-class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context) {
+class ImageDialog(context: Context, bitmap: Bitmap, content: String) : Dialog(context) {
+
     private var mBitmap: Bitmap = bitmap
     private lateinit var mListener: () -> Unit?
+    private var mShawCode = true
+    private val mContent = content
+
+    private val mClipboardManager by lazy { context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setBackgroundDrawableResource(android.R.color.transparent);
         setCancelable(true)
         val contentView = LayoutInflater.from(context).inflate(R.layout.dialog_image, null)
-        val size = (context.resources.displayMetrics.widthPixels * 0.7).toInt()
-        val layoutParams = ViewGroup.LayoutParams(size, size)
+        val width = (context.resources.displayMetrics.widthPixels * 0.7).toInt()
+        val layoutParams = ViewGroup.LayoutParams(width, width)
         setContentView(contentView, layoutParams)
-        val imageView = contentView.findViewById<ImageView>(R.id.image)
+        val imageView = findViewById<ImageView>(R.id.image)
+        val text = findViewById<TextView>(R.id.text)
+        val card = findViewById<CardView>(R.id.card)
+        text.text = content
         imageView.setImageBitmap(bitmap)
+        imageView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                imageView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                text.visibility = View.VISIBLE
+                text.translationX = imageView.width.toFloat()
+            }
+        })
         val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
             override fun onLongPress(e: MotionEvent?) {
                 if (e != null) {
                     showMenu(imageView, e.x.toInt(), e.y.toInt())
                 }
             }
+
+            override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+                Log.d(Thread.currentThread().name, "class = ImageDialog rhjlog onSingleTapConfirmed: ")
+                val size = card.width.toFloat()
+                val animator1 = ObjectAnimator.ofFloat(imageView, "translationX", if (mShawCode) 0F else -size, if (mShawCode) -size else 0F)
+                val animator2 = ObjectAnimator.ofFloat(text, "translationX", if (mShawCode) size else 0F, if (mShawCode) 0F else size)
+                animator1.setDuration(300).start()
+                animator2.setDuration(300).start()
+                mShawCode = !mShawCode
+                return super.onSingleTapConfirmed(e)
+            }
         })
-        imageView.setOnTouchListener { _, motionEvent -> gestureDetector.onTouchEvent(motionEvent) }
-        imageView.setOnLongClickListener { true }   // 为了震动
+        card.setOnTouchListener { _, motionEvent -> gestureDetector.onTouchEvent(motionEvent) }
+        card.setOnLongClickListener { true }   // 为了震动
     }
 
     private fun showMenu(view: View, x: Int, y: Int) {
@@ -54,6 +87,13 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
         contentView.findViewById<View>(R.id.tv_exit).setOnClickListener { dismiss() }
         contentView.findViewById<View>(R.id.tv_open).setOnClickListener { dismissMenu(popupWindow, this::openBitmap) }
         contentView.findViewById<View>(R.id.tv_setting).setOnClickListener { dismissMenu(popupWindow, this::openSettingActivity) }
+        contentView.findViewById<View>(R.id.tv_copy).setOnClickListener { copy(popupWindow) }
+    }
+
+    private fun copy(popupWindow: PopupWindow) {
+        popupWindow.dismiss()
+        mClipboardManager.primaryClip = ClipData.newPlainText(mContent, mContent)
+        Toast.makeText(context, "复制成功", Toast.LENGTH_LONG).show()
     }
 
     fun setOnSettingClickListener(listener: () -> Unit) {
@@ -71,7 +111,7 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
         }
     }
 
-    private fun saveToFile() :File? {
+    private fun saveToFile(): File? {
         val file = File(getCacheDir(context), "QRCode.jpg")
         val result = save(mBitmap, file)
         return if (result) {
@@ -100,7 +140,7 @@ class ImageDialog constructor(context: Context, bitmap: Bitmap) : Dialog(context
             StrictMode.setVmPolicy(builder.build())
         }
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
-        return  intent
+        return intent
     }
 
     private fun dismissMenu(popupWindow: PopupWindow, func: () -> Unit) {

@@ -38,13 +38,13 @@ class MainActivity : AppCompatActivity() {
             } else {
                 QRCodeEncoder.syncEncodeQRCode(shareTxt, qrCodeSize)
             }
-            showDialog(bitmap)
+            showDialog(bitmap, shareTxt)
         }
     }
 
-    private fun showDialog(bitmap: Bitmap?) {
+    private fun showDialog(bitmap: Bitmap?, content: String) {
         if (bitmap != null) {
-            val dialog = ImageDialog(this, bitmap)
+            val dialog = ImageDialog(this, bitmap, content)
             dialog.setOnDismissListener {
                 finish()
                 System.exit(0)
