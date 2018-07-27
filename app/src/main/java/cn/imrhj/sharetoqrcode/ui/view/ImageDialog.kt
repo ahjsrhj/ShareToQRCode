@@ -12,25 +12,26 @@ import android.os.Build
 import android.os.StrictMode
 import android.support.v7.widget.CardView
 import android.view.*
-import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
 import cn.imrhj.sharetoqrcode.R
 import cn.imrhj.sharetoqrcode.util.getCacheDir
 import cn.imrhj.sharetoqrcode.util.save
+import kotlinx.android.synthetic.main.dialog_image.*
 import java.io.File
 
 
 /**
  * Created by rhj on 2017/9/6.
  */
-class ImageDialog(context: Context, bitmap: Bitmap, content: String, borderWidth: Int) : Dialog(context) {
+class ImageDialog(context: Context, bitmap: Bitmap, content: String) : Dialog(context) {
 
     private var mBitmap: Bitmap = bitmap
     private lateinit var mListener: () -> Unit?
     private var mShawCode = true
     private val mContent = content
+//    private val image by lazy { findViewById<ImageView>(R.id.image) }
 
     private val mClipboardManager by lazy { context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
@@ -42,30 +43,28 @@ class ImageDialog(context: Context, bitmap: Bitmap, content: String, borderWidth
         val width = (context.resources.displayMetrics.widthPixels * 0.7).toInt()
         val layoutParams = ViewGroup.LayoutParams(width, width)
         setContentView(contentView, layoutParams)
-        val imageView = findViewById<ImageView>(R.id.image)
         val text = findViewById<TextView>(R.id.text)
         val card = findViewById<CardView>(R.id.card)
         val scrollView = findViewById<View>(R.id.scrollView)
         text.text = content
-        imageView.setImageBitmap(bitmap)
-        imageView.setPadding(borderWidth, borderWidth, borderWidth, borderWidth)
-        imageView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        image.setImageBitmap(bitmap)
+        image.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                imageView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                image.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 scrollView.visibility = View.VISIBLE
-                scrollView.translationX = imageView.width.toFloat()
+                scrollView.translationX = image.width.toFloat()
             }
         })
         val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
             override fun onLongPress(e: MotionEvent?) {
                 if (e != null) {
-                    showMenu(imageView, e.x.toInt(), e.y.toInt())
+                    showMenu(image, e.x.toInt(), e.y.toInt())
                 }
             }
 
             override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
                 val size = card.width.toFloat()
-                val animator1 = ObjectAnimator.ofFloat(imageView, "translationX", if (mShawCode) 0F else -size, if (mShawCode) -size else 0F)
+                val animator1 = ObjectAnimator.ofFloat(image, "translationX", if (mShawCode) 0F else -size, if (mShawCode) -size else 0F)
                 val animator2 = ObjectAnimator.ofFloat(scrollView, "translationX", if (mShawCode) size else 0F, if (mShawCode) 0F else size)
                 animator1.setDuration(300).start()
                 animator2.setDuration(300).start()
@@ -78,6 +77,10 @@ class ImageDialog(context: Context, bitmap: Bitmap, content: String, borderWidth
         card.setOnLongClickListener { true }   // 为了震动
         text.setOnTouchListener { _, motionEvent -> gestureDetector.onTouchEvent(motionEvent) }
         text.setOnLongClickListener { true }
+    }
+
+    fun updateBorderWidth(borderWidth: Int) {
+        image.setPadding(borderWidth, borderWidth, borderWidth, borderWidth)
     }
 
     private fun showMenu(view: View, x: Int, y: Int) {
