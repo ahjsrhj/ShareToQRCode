@@ -23,6 +23,6 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-#branches:
-#  only:
-#    - master
+branches:
+  only:
+    - master
