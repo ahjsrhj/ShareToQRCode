@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="@string/pref_key_scan_qr"
@@ -33,6 +34,12 @@
             android:summary="@string/pref_summary_custom_img"
             android:title="@string/pref_title_custom_img" />
 
+        <cn.imrhj.sharetoqrcode.ui.view.preference.SeekBarPreference
+            android:defaultValue="12"
+            android:key="@string/pref_key_border_width"
+            android:title="@string/pref_title_border_width"
+            app:msbp_maxValue="50"
+            app:msbp_minValue="0" />
 
     </PreferenceCategory>
 

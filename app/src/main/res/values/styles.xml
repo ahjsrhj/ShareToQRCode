@@ -13,8 +13,9 @@
     </style>
 
     <style name="AppTheme.Setting">
+        <!--<item name="android:windowActionBar">true</item>-->
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:windowNoTitle">false</item>
+        <!--<item name="android:windowNoTitle">false</item>-->
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
     </style>

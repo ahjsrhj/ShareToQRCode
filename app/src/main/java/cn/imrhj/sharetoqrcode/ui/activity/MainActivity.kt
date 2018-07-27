@@ -18,6 +18,7 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private val file by lazy { File(filesDir, "logo.jpg") }
+    private lateinit var mDialog: ImageDialog
     private val mSharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(applicationContext)
     }
@@ -42,21 +43,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mDialog.updateBorderWidth(dp2px(mSharedPreferences.getInt(getString(R.string.pref_key_border_width), 12)))
+
+    }
+
+    fun dp2px(dp: Int): Int {
+        return (resources.displayMetrics.density * dp + 0.5f).toInt()
+    }
+
     private fun showDialog(bitmap: Bitmap?, content: String) {
         if (bitmap != null) {
-            val dialog = ImageDialog(this, bitmap, content)
-            dialog.setOnDismissListener {
+            mDialog = ImageDialog(this, bitmap, content)
+            mDialog.setOnDismissListener {
                 finish()
                 System.exit(0)
             }
-            dialog.setOnSettingClickListener {
+            mDialog.setOnSettingClickListener {
                 //                startActivity(Intent(this, SettingsActivity::class.java))
                 val intent = Intent()
                 intent.data = Uri.parse("cn.imrhj.shareqrcode://setting")
                 intent.action = Intent.ACTION_VIEW
                 startActivity(intent)
             }
-            dialog.show()
+            mDialog.show()
         }
     }
 
