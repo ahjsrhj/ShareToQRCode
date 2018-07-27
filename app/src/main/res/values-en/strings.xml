@@ -42,4 +42,6 @@
     <string name="crop">Crop</string>
     <string name="title_try">Experimental function</string>
 
+    <string name="pref_title_border_width">Border Width</string>
+
 </resources>

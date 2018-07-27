@@ -13,6 +13,8 @@ import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.FrameLayout
+import android.widget.ListView
 import android.widget.Toast
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder
 import cn.imrhj.sharetoqrcode.R
@@ -34,11 +36,22 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        setSupportActionBar(toolbar)
+        initView()
         initUseLogo()
         initQRCode()
         fragmentManager.beginTransaction()
                 .replace(R.id.content, SettingFragment())
                 .commit()
+    }
+
+    private fun initView() {
+        val param = card.layoutParams
+        val width = (resources.displayMetrics.widthPixels * 0.7).toInt()
+        param.width = width
+        param.height = width
+        val borderWidth = dp2px(mSharedPreferences.getInt(getString(R.string.pref_key_border_width), 12))
+        image.setPadding(borderWidth, borderWidth, borderWidth, borderWidth)
     }
 
     private fun initUseLogo() {
@@ -76,12 +89,41 @@ class SettingsActivity : AppCompatActivity() {
         initQRCode()
     }
 
+    fun dp2px(dp: Int): Int {
+        return (resources.displayMetrics.density * dp + 0.5f).toInt()
+    }
+
+    fun changeBoarder(borderWidth: Int) {
+        val width = dp2px(borderWidth)
+        image.setPadding(width, width, width, width)
+    }
+
     class SettingFragment : PreferenceFragment() {
         private val REQUEST_ALBUM = 11
         private val REQUEST_CROP = 12
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             addPreferencesFromResource(R.xml.pref_settings)
+        }
+
+        override fun onActivityCreated(savedInstanceState: Bundle?) {
+            super.onActivityCreated(savedInstanceState)
+            if (view != null) {
+                val listView = view.findViewById<ListView>(android.R.id.list)
+                val adapter = listView.adapter
+                if (adapter != null) {
+                    var height = 0
+                    for (i in 0 until adapter.count) {
+                        val item = adapter.getView(i, null, listView)
+                        item.measure(0, 0)
+                        height += item.measuredHeight
+                    }
+                    val frame = activity.findViewById<FrameLayout>(R.id.content)
+                    val param = frame.layoutParams
+                    param.height = height + (listView.dividerHeight * adapter.count)
+                    frame.layoutParams = param
+                }
+            }
         }
 
         override fun onStart() {
@@ -130,8 +172,6 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             findPreference(getString(R.string.pref_key_hide_icon)).setOnPreferenceChangeListener { _, newValue ->
-                //                activity.packageManager
-
                 val componentName = ComponentName(activity.applicationContext, LoadingActivity::class.java)
                 if (newValue == true) {
                     // hide
@@ -146,6 +186,12 @@ class SettingsActivity : AppCompatActivity() {
                             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                             PackageManager.DONT_KILL_APP)
                 }
+                true
+            }
+
+            findPreference(getString(R.string.pref_key_border_width)).setOnPreferenceChangeListener { _, newValue ->
+                Log.d(Thread.currentThread().name, "class = SettingFragment rhjlog register: $newValue")
+                (activity as SettingsActivity).changeBoarder((newValue as Number).toInt())
                 true
             }
 

@@ -42,9 +42,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun dp2px(dp: Int): Int {
+        return (resources.displayMetrics.density * dp + 0.5f).toInt()
+    }
+
     private fun showDialog(bitmap: Bitmap?, content: String) {
         if (bitmap != null) {
-            val dialog = ImageDialog(this, bitmap, content)
+            val dialog = ImageDialog(this, bitmap, content, dp2px(mSharedPreferences.getInt(getString(R.string.pref_key_border_width), 12)))
             dialog.setOnDismissListener {
                 finish()
                 System.exit(0)

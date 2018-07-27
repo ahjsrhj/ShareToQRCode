@@ -25,7 +25,7 @@ import java.io.File
 /**
  * Created by rhj on 2017/9/6.
  */
-class ImageDialog(context: Context, bitmap: Bitmap, content: String) : Dialog(context) {
+class ImageDialog(context: Context, bitmap: Bitmap, content: String, borderWidth: Int) : Dialog(context) {
 
     private var mBitmap: Bitmap = bitmap
     private lateinit var mListener: () -> Unit?
@@ -48,6 +48,7 @@ class ImageDialog(context: Context, bitmap: Bitmap, content: String) : Dialog(co
         val scrollView = findViewById<View>(R.id.scrollView)
         text.text = content
         imageView.setImageBitmap(bitmap)
+        imageView.setPadding(borderWidth, borderWidth, borderWidth, borderWidth)
         imageView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 imageView.viewTreeObserver.removeOnGlobalLayoutListener(this)
