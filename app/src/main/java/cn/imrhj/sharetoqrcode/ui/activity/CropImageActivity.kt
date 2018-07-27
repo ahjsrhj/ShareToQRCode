@@ -25,7 +25,10 @@ class CropImageActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
-        cancelButton.setOnClickListener { finishActivity(Activity.RESULT_CANCELED) }
+        cancelButton.setOnClickListener {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
         cropButton.setOnClickListener { cropImageView.saveCroppedImageAsync(Uri.fromFile(File(intent.getStringExtra("file")))) }
     }
 }
