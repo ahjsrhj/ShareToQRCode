@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.MediaStore
@@ -32,7 +33,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initIntent() {
         if (intent.type == "text/plain") {
-            var shareTxt = intent.getStringExtra(Intent.EXTRA_TEXT)
+            var shareTxt = when {
+                intent.hasExtra(Intent.EXTRA_TEXT) -> intent.getStringExtra(Intent.EXTRA_TEXT)
+                intent.hasExtra(Intent.EXTRA_PROCESS_TEXT) -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT).toString()
+                } else {
+                    "https://imrhj.cn"
+                }
+                else -> "https://imrhj.cn"
+            }
             val bitmap = if (mSharedPreferences.getBoolean(getString(R.string.pref_key_enable_logo), false).and(file.exists())) {
                 val logo = MediaStore.Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
                 QRCodeEncoder.syncEncodeQRCode(shareTxt, qrCodeSize, Color.BLACK, logo)
