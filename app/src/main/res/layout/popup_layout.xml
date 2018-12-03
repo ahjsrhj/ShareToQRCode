@@ -13,17 +13,17 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_open"
+            android:id="@+id/tv_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_background"
             android:clickable="true"
             android:focusable="true"
-            android:paddingBottom="9dp"
-            android:paddingEnd="38dp"
             android:paddingStart="18dp"
             android:paddingTop="9dp"
-            android:text="@string/open"
+            android:paddingEnd="38dp"
+            android:paddingBottom="9dp"
+            android:text="@string/save"
             android:textColor="@android:color/secondary_text_light"
             android:textSize="18sp" />
 
@@ -34,10 +34,10 @@
             android:background="@drawable/ripple_background"
             android:clickable="true"
             android:focusable="true"
-            android:paddingBottom="9dp"
-            android:paddingEnd="38dp"
             android:paddingStart="18dp"
             android:paddingTop="9dp"
+            android:paddingEnd="38dp"
+            android:paddingBottom="9dp"
             android:text="@string/share"
             android:textColor="@android:color/secondary_text_light"
             android:textSize="18sp" />
@@ -49,10 +49,10 @@
             android:background="@drawable/ripple_background"
             android:clickable="true"
             android:focusable="true"
-            android:paddingBottom="9dp"
-            android:paddingEnd="38dp"
             android:paddingStart="18dp"
             android:paddingTop="9dp"
+            android:paddingEnd="38dp"
+            android:paddingBottom="9dp"
             android:text="@string/copy"
             android:textColor="@android:color/secondary_text_light"
             android:textSize="18sp" />
@@ -64,10 +64,10 @@
             android:background="@drawable/ripple_background"
             android:clickable="true"
             android:focusable="true"
-            android:paddingBottom="9dp"
-            android:paddingEnd="38dp"
             android:paddingStart="18dp"
             android:paddingTop="9dp"
+            android:paddingEnd="38dp"
+            android:paddingBottom="9dp"
             android:text="@string/setting"
             android:textColor="@android:color/secondary_text_light"
             android:textSize="18sp" />
@@ -79,10 +79,10 @@
             android:background="@drawable/ripple_background"
             android:clickable="true"
             android:focusable="true"
-            android:paddingBottom="9dp"
-            android:paddingEnd="38dp"
             android:paddingStart="18dp"
             android:paddingTop="9dp"
+            android:paddingEnd="38dp"
+            android:paddingBottom="9dp"
             android:text="@string/exit"
             android:textColor="@android:color/secondary_text_light"
             android:textSize="18sp" />

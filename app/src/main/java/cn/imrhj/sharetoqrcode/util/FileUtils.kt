@@ -60,3 +60,11 @@ fun getCacheDir(context: Context): File {
         context.cacheDir
     }
 }
+
+fun getMediaDir(context: Context): File {
+    val mediaDirs = context.externalMediaDirs
+    if (mediaDirs.isNotEmpty()) {
+        return mediaDirs[0]
+    }
+    return getCacheDir(context)
+}

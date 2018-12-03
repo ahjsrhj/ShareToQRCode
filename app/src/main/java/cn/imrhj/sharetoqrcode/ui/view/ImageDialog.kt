@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import cn.imrhj.sharetoqrcode.R
 import cn.imrhj.sharetoqrcode.util.getCacheDir
+import cn.imrhj.sharetoqrcode.util.getMediaDir
 import cn.imrhj.sharetoqrcode.util.save
 import kotlinx.android.synthetic.main.dialog_image.*
 import java.io.File
@@ -91,7 +92,7 @@ class ImageDialog(context: Context, bitmap: Bitmap, content: String) : Dialog(co
 
         contentView.findViewById<View>(R.id.tv_share).setOnClickListener { dismissMenu(popupWindow, this::shareBitmap) }
         contentView.findViewById<View>(R.id.tv_exit).setOnClickListener { dismiss() }
-        contentView.findViewById<View>(R.id.tv_open).setOnClickListener { dismissMenu(popupWindow, this::openBitmap) }
+        contentView.findViewById<View>(R.id.tv_save).setOnClickListener { dismissMenu(popupWindow, this::saveBitmap) }
         contentView.findViewById<View>(R.id.tv_setting).setOnClickListener { dismissMenu(popupWindow, this::openSettingActivity) }
         contentView.findViewById<View>(R.id.tv_copy).setOnClickListener { copy(popupWindow) }
     }
@@ -106,15 +107,26 @@ class ImageDialog(context: Context, bitmap: Bitmap, content: String) : Dialog(co
         this.mListener = listener
     }
 
-    private fun openBitmap() {
-        val file = saveToFile()
+
+    private fun saveBitmap() {
+        val file = saveToMedia()
         if (file != null) {
-            val intent = buildIntent(file, Intent.ACTION_VIEW)
-            intent.setDataAndType(Uri.fromFile(file), "image/jpg")
-            context.startActivity(intent)
+            val uri = Uri.fromFile(file)
+            context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
+
+            Toast.makeText(context, "图片已保存到相册", Toast.LENGTH_SHORT).show()
+//            val intent = buildIntent(file, Intent.ACTION_VIEW)
+//            intent.setDataAndType(uri, "image/jpg")
+//            context.startActivity(intent)
         } else {
             Toast.makeText(context, "生成临时文件失败", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun saveToMedia(): File? {
+        val file = File(getMediaDir(context), "二维码_${System.currentTimeMillis()}.jpg")
+        val result = save(mBitmap, file)
+        return if (result) file else null
     }
 
     private fun saveToFile(): File? {

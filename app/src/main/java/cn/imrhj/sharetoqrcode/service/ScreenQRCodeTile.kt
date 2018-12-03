@@ -39,9 +39,8 @@ class ScreenQRCodeTile : TileService() {
 
     override fun onStartListening() {
         super.onStartListening()
-        Log.d(Thread.currentThread().name, "class = ScreenQRCodeTile rhjlog onStartListening: " + qsTile?.state)
-        qsTile.state = Tile.STATE_INACTIVE
-        qsTile.updateTile()
+        qsTile?.state = Tile.STATE_INACTIVE
+        qsTile?.updateTile()
     }
 
     private fun scanQRCodeForRoot() {
