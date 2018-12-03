@@ -8,7 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.MediaStore
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder
 import cn.imrhj.sharetoqrcode.R
 import cn.imrhj.sharetoqrcode.ui.view.ImageDialog
