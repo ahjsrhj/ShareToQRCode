@@ -10,7 +10,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.StrictMode
-import android.support.v7.widget.CardView
+import androidx.cardview.widget.CardView
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.TextView

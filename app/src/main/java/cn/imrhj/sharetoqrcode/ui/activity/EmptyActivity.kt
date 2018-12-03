@@ -1,7 +1,7 @@
 package cn.imrhj.sharetoqrcode.ui.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 class EmptyActivity : AppCompatActivity() {
 
