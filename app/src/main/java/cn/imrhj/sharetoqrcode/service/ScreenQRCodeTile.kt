@@ -33,7 +33,9 @@ class ScreenQRCodeTile : TileService() {
         if (mUseRoot) {
             scanQRCodeForRoot()
         } else {
-            startActivityAndCollapse(Intent(this, MediaProjectionActivity::class.java))
+            val intent = Intent(this, MediaProjectionActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivityAndCollapse(intent)
         }
     }
 

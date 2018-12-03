@@ -19,11 +19,11 @@ android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
-        applicationId "cn.imrhj.sharetoqrcode"
+        applicationId "zz.imrhj.sharetoqrcode"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode gitCommitCount
-        versionName "1.2.4"
+        versionName "1.2.5"
         vectorDrawables.useSupportLibrary = true
     }
 
